@@ -16,7 +16,8 @@ class GruntTask
     @Override
     void exec()
     {
-        def localGrunt = this.project.file( GRUNT_SCRIPT )
+        def extParams = GruntExtension.get(this.project)
+        def localGrunt = this.project.file( "${extParams.workDir}/${GRUNT_SCRIPT}" )
         if ( !localGrunt.isFile() )
         {
             throw new GradleException(
