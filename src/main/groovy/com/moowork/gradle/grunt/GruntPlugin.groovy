@@ -1,5 +1,6 @@
 package com.moowork.gradle.grunt
 
+import com.moowork.gradle.node.NodeExtension
 import com.moowork.gradle.node.NodePlugin
 import org.gradle.api.Plugin
 import org.gradle.api.Project
@@ -18,6 +19,8 @@ class GruntPlugin
         project.extensions.extraProperties.set( 'GruntTask', GruntTask.class )
         project.tasks.create( GRUNT_INSTALL_NAME, GruntInstallTask.class )
 
+        addExtraProperties(project)
+
         // note this rule also makes it possible to specify e.g. "dependsOn grunt_install"
         project.getTasks().addRule( 'Pattern: "grunt_<task>": Executes a named grunt task.' ) { String taskName ->
             if ( taskName.startsWith( 'grunt_' ) )
@@ -27,5 +30,9 @@ class GruntPlugin
                 return gruntTask
             }
         }
+    }
+
+    private void addExtraProperties(Project project) {
+        project.extensions.create(GruntExtension.NAME, GruntExtension, project)
     }
 }

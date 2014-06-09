@@ -44,6 +44,14 @@ artifacts {
     archives groovydocJar
 }
 
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            repository(url: uri('../repo'))
+        }
+    }
+}
+
 publishing {
     publications {
         mavenJava( MavenPublication ) {
