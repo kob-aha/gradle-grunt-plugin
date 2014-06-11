@@ -13,10 +13,6 @@ class GruntInstallTask
         this.group = 'Grunt'
         this.description = "Runs 'npm install grunt-cli grunt' to install grunt-cli"
 
-        // TODO Check if I need outputs dir
-
-//        getOutputs().dir( 'node_modules/grunt' )
-//        getOutputs().dir( 'node_modules/grunt-cli' )
     }
 
     @TaskAction
@@ -25,6 +21,9 @@ class GruntInstallTask
         def extParams = GruntExtension.get(this.project)
 
         setArgs( ['install', 'grunt-cli', 'grunt', '--prefix', extParams.workDir] )
+
+        getOutputs().dir( "${extParams.workDir}/node_modules/grunt" )
+        getOutputs().dir( "${extParams.workDir}/node_modules/grunt-cli" )
 
         super.exec()
     }
